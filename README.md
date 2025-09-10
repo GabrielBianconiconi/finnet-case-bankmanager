@@ -1,0 +1,1 @@
+# finnet-case-bankmanager
