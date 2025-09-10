@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "robmorgan/phinx": "*"
+        "robmorgan/phinx": "^0.16.10"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
