@@ -28,7 +28,6 @@ class StudentController
         echo json_encode(['data' => $students]);
     }
     
-    // Displays a single student by ID
     public function show(int $id): void
     {
         header('Content-Type: application/json');
@@ -50,7 +49,7 @@ class StudentController
         $data = json_decode(file_get_contents('php://input'), true);
 
         if ($this->studentModel->create($data)) {
-            http_response_code(201); // 201 Created
+            http_response_code(201); 
             echo json_encode(['message' => 'Aluno criado com sucesso.']);
         } else {
             http_response_code(500);

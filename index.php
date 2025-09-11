@@ -11,14 +11,8 @@ use App\Controllers\API\EnrollmentController as EnrollmentAPIController;
 use App\Controllers\API\AuthController as AuthAPIController;
 use App\Controllers\API\CourseAreaController as CourseAreaAPIController;
 
-// --- ROTEAMENTO ---
 $router = new Router();
 
-// =========================================================================
-// ROTEAMENTO PARA A API REST
-// =========================================================================
-
-// Rotas de Autenticação da API (login)
 $router->post('/api/login', AuthAPIController::class, 'login');
 
 // Rotas da API para Cursos
@@ -45,5 +39,4 @@ $router->delete('/api/enrollments/{id}', EnrollmentAPIController::class, 'destro
 $router->get('/{path}', FrontendController::class, 'index');
 $router->get('/', FrontendController::class, 'index');
 
-// Resolve a rota
 $router->resolve();
