@@ -32,7 +32,7 @@ $router->get('/login', 'App\\Controllers\\AuthController', 'showLoginForm');
 $router->post('/login', 'App\\Controllers\\AuthController', 'login');
 $router->get('/logout', 'App\\Controllers\\AuthController', 'logout');
 
-// Rotas de Cursos (CRUD)
+// Rotas de Cursos
 $router->get('/courses', 'App\\Controllers\\CourseController', 'index');
 $router->get('/courses/create', 'App\\Controllers\\CourseController', 'create');
 $router->post('/courses/store', 'App\\Controllers\\CourseController', 'store');
@@ -46,6 +46,7 @@ $router->get('/students/create', 'App\\Controllers\\StudentController', 'create'
 $router->post('/students/store', 'App\\Controllers\\StudentController', 'store');
 $router->get('/students/edit/{id}', 'App\\Controllers\\StudentController', 'edit');
 $router->post('/students/update/{id}', 'App\\Controllers\\StudentController', 'update');
+$router->post('/students/delete/{id}', 'App\\Controllers\\StudentController', 'destroy');
 
 // Rotas de Matrículas
 $router->get('/enrollments', 'App\\Controllers\\EnrollmentController', 'index');
@@ -53,6 +54,7 @@ $router->get('/enrollments/create', 'App\\Controllers\\EnrollmentController', 'c
 $router->post('/enrollments/store', 'App\\Controllers\\EnrollmentController', 'store');
 $router->get('/enrollments/edit/{id}', 'App\\Controllers\\EnrollmentController', 'edit');
 $router->post('/enrollments/update/{id}', 'App\\Controllers\\EnrollmentController', 'update');
+$router->post('/enrollments/delete/{id}', 'App\\Controllers\\EnrollmentController', 'destroy');
 
 // Resolve a rota
 $router->resolve();
