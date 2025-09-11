@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import ConfirmPopup from '../components/ConfirmPopup';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import PageLayout from '../components/PageLayout';
 
 const CoursesPage = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [courseToDeleteId, setCourseToDeleteId] = useState(null);
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -32,6 +38,35 @@ const CoursesPage = () => {
         fetchCourses();
     }, []);
 
+    const handleOpenPopup = (courseId) => {
+        setCourseToDeleteId(courseId);
+        setPopupVisible(true);
+    };
+
+    const handleCancelDelete = () => {
+        setPopupVisible(false);
+        setCourseToDeleteId(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            await axios.delete(`http://localhost:8000/api/courses/${courseToDeleteId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            // Atualiza a lista removendo o curso excluído
+            setCourses(courses.filter(course => course.id !== courseToDeleteId));
+            
+            // Fecha o pop-up e limpa o ID
+            handleCancelDelete();
+        } catch (error) {
+            console.error('Erro ao excluir curso:', error);
+            alert('Erro ao excluir o curso. Tente novamente.');
+            handleCancelDelete();
+        }
+    };
+
     if (loading) return <PageLayout pageTitle="Gerenciamento de Cursos"><div>Carregando...</div></PageLayout>;
     if (error) return <PageLayout pageTitle="Gerenciamento de Cursos"><div>Erro: {error}</div></PageLayout>;
 
@@ -57,17 +92,27 @@ const CoursesPage = () => {
                                 <td>{course.title}</td>
                                 <td>{course.description}</td>
                                 <td className="actions">
-                                    {}
                                     <a href={`/courses/edit/${course.id}`} className="btn btn-secondary">Editar</a>
-                                    <form style={{ display: 'inline' }}>
-                                        <button type="submit" className="btn btn-danger">Excluir</button>
-                                    </form>
+                                    <button 
+                                        onClick={() => handleOpenPopup(course.id)} 
+                                        className="btn btn-danger"
+                                    >
+                                        <FontAwesomeIcon icon={faTrashAlt} /> Excluir
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            {popupVisible && (
+                <ConfirmPopup 
+                    message="Tem certeza que deseja excluir este curso?" 
+                    onConfirm={handleConfirmDelete} 
+                    onCancel={handleCancelDelete} 
+                />
+            )}
         </PageLayout>
     );
 };
