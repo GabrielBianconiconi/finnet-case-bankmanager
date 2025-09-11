@@ -15,7 +15,6 @@
                 <a href="/bank-manager" class="logo">BM</a>
             </div>
             <nav class="sidebar-nav">
-                <a href="/course-areas" title="Áreas de Cursos"><i class="fa-solid fa-graduation-cap"></i></a>
                 <a href="/courses" title="Cursos"><i class="fa-solid fa-book"></i></a>
                 <a href="/students" title="Alunos"><i class="fa-solid fa-user-group"></i></a>
                 <a href="/enrollments" title="Matrículas"><i class="fa-solid fa-id-card"></i></a>

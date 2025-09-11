@@ -6,15 +6,15 @@ class AuthController
 {
     public function showLoginForm(): void
     {
+        if (isset($_SESSION['user_id'])) {
+            header('Location: /courses');
+            exit();
+        }
         require_once __DIR__ . '/../Views/auth/login.php';
     }
 
     public function login(): void
     {
-
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
         $email = $_POST['email'] ?? '';
         $password = $_POST['password'] ?? '';
@@ -23,16 +23,15 @@ class AuthController
         $adminEmail = '1@gmail.com';
         $adminPassword = '1';
 
-        if ($email === $adminEmail && $password === $adminPassword) {
-            $_SESSION['user_logged_in'] = true;
-            $_SESSION['user_email'] = $email;
-            
-            header('Location: /dashboard');
-            exit;
+        if ($email === 'admin@bankmanager.com' && $password === 'admin') {
+            $_SESSION['user_id'] = 1; 
+            session_write_close();
+            header('Location: /courses');
+            exit();
         } else {
-            $error = 'Email ou senha inválidos.';
-            
-            require_once __DIR__ . '/../Views/auth/login.php';
+            $_SESSION['error_message'] = 'E-mail ou senha inválidos.';
+            header('Location: /login');
+            exit();
         }
     }
 
@@ -40,10 +39,8 @@ class AuthController
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
-        }
-        
+        } 
         session_destroy();
-        
         header('Location: /');
         exit;
     }
