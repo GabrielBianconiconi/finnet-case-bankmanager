@@ -18,6 +18,18 @@ class Router
         $this->routes['POST'][$path] = ['controller' => $controller, 'method' => $method];
     }
 
+    //PUT
+    public function put(string $path, string $controller, string $method): void
+    {
+        $this->routes['PUT'][$path] = ['controller' => $controller, 'method' => $method];
+    }
+
+    //DELETE
+    public function delete(string $path, string $controller, string $method): void
+    {
+        $this->routes['DELETE'][$path] = ['controller' => $controller, 'method' => $method];
+    }
+
     public function resolve(): void
     {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
