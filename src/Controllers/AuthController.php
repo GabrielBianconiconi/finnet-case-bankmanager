@@ -20,8 +20,8 @@ class AuthController
         $password = $_POST['password'] ?? '';
 
         // teste hardcode
-        $adminEmail = 'jubilut@bankmanager.com';
-        $adminPassword = 'jubilut123';
+        $adminEmail = '1@gmail.com';
+        $adminPassword = '1';
 
         if ($email === $adminEmail && $password === $adminPassword) {
             $_SESSION['user_logged_in'] = true;
