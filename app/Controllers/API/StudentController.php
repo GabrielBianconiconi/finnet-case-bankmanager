@@ -3,6 +3,7 @@
 namespace App\Controllers\API;
 
 use App\Models\StudentModel;
+use App\Core\AuthMiddleware;
 
 class StudentController
 {
@@ -15,6 +16,7 @@ class StudentController
 
     public function index(): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
 
         $searchTerm = $_GET['search'] ?? '';
@@ -30,6 +32,7 @@ class StudentController
     
     public function show(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
 
         $student = $this->studentModel->findById($id);
@@ -44,6 +47,7 @@ class StudentController
 
     public function store(): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         
         $data = json_decode(file_get_contents('php://input'), true);
@@ -59,6 +63,7 @@ class StudentController
 
     public function update(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
 
         $data = json_decode(file_get_contents('php://input'), true);
@@ -73,6 +78,7 @@ class StudentController
 
     public function destroy(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         
         if ($this->studentModel->delete($id)) {

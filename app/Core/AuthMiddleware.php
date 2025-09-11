@@ -25,7 +25,7 @@ class AuthMiddleware
 
         $token = str_replace('Bearer ', '', $authHeader);
 
-        $secretKey = $_ENV['JWT_SECRET_KEY'] ?? 'sua_chave_secreta_padrao';
+        $secretKey = $_ENV['JWT_SECRET_KEY'];
 
         try {
 

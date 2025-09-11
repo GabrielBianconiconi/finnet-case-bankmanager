@@ -3,6 +3,7 @@
 namespace App\Controllers\API;
 
 use App\Models\CourseModel;
+use App\Core\AuthMiddleware;
 
 class CourseController
 {
@@ -15,6 +16,7 @@ class CourseController
     
     public function index(): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         
         $courses = $this->courseModel->findAll();
@@ -24,6 +26,7 @@ class CourseController
 
     public function show(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         
         $course = $this->courseModel->findById($id);
@@ -38,6 +41,7 @@ class CourseController
 
     public function store(): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -52,6 +56,7 @@ class CourseController
 
     public function update(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -65,6 +70,7 @@ class CourseController
 
     public function destroy(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         
         if ($this->courseModel->delete($id)) {

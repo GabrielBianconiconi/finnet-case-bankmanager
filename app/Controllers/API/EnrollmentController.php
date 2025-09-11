@@ -5,6 +5,7 @@ namespace App\Controllers\API;
 use App\Models\EnrollmentModel;
 use App\Models\StudentModel;
 use App\Models\CourseModel;
+use App\Core\AuthMiddleware;
 
 class EnrollmentController
 {
@@ -21,6 +22,7 @@ class EnrollmentController
     
     public function index(): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         $enrollments = $this->enrollmentModel->findAllWithDetails();
         echo json_encode(['data' => $enrollments]);
@@ -28,6 +30,7 @@ class EnrollmentController
 
     public function show(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         $enrollment = $this->enrollmentModel->findById($id);
 
@@ -41,6 +44,7 @@ class EnrollmentController
 
     public function store(): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -55,6 +59,7 @@ class EnrollmentController
 
     public function update(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -68,6 +73,7 @@ class EnrollmentController
 
     public function destroy(int $id): void
     {
+        AuthMiddleware::checkToken();
         header('Content-Type: application/json');
         
         if ($this->enrollmentModel->delete($id)) {

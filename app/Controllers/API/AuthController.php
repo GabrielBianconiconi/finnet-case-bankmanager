@@ -29,7 +29,7 @@ class AuthController
 
         if ($user && password_verify($password, $user['password'])) {
 
-            $secretKey = $_ENV['JWT_SECRET_KEY'] ?? 'sua_chave_secreta_padrao';
+            $secretKey =$_ENV['JWT_SECRET_KEY'];
             
             $payload = [
                 'iat'  => time(), 
