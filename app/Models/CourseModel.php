@@ -18,6 +18,7 @@ class CourseModel extends BaseModel
             ':description' => $data['description']
         ]);
     }
+    
     public function update(int $id, array $data): bool
     {
         $sql = "UPDATE courses SET title = :title, description = :description, updated_at = NOW() WHERE id = :id";
@@ -28,5 +29,12 @@ class CourseModel extends BaseModel
             ':title' => $data['title'],
             ':description' => $data['description']
         ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM courses WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':id' => $id]);
     }
 }

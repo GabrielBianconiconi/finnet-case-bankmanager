@@ -38,6 +38,7 @@ $router->get('/courses/create', 'App\\Controllers\\CourseController', 'create');
 $router->post('/courses/store', 'App\\Controllers\\CourseController', 'store');
 $router->get('/courses/edit/{id}', 'App\\Controllers\\CourseController', 'edit');
 $router->post('/courses/update/{id}', 'App\\Controllers\\CourseController', 'update');
+$router->post('/courses/delete/{id}', 'App\\Controllers\\CourseController', 'destroy');
 
 // Rotas de Alunos
 $router->get('/students', 'App\\Controllers\\StudentController', 'index');

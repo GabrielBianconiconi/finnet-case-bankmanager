@@ -66,5 +66,13 @@ class CourseController extends BaseController
         header('Location: /courses');
         exit();
     }
+
+    public function destroy(int $id): void
+    {
+        $this->courseModel->delete($id);
+
+        header('Location: /courses');
+        exit();
+    }
 }
 

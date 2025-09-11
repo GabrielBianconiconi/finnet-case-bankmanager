@@ -21,8 +21,9 @@ class Router
     public function resolve(): void
     {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
-        $method = $_SERVER['REQUEST_METHOD'];
+        $path = trim($path);
 
+        $method = $_SERVER['REQUEST_METHOD'];
         $route = $this->findRoute($method, $path);
 
         if ($route) {
