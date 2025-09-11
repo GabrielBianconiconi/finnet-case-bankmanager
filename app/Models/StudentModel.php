@@ -36,5 +36,12 @@ class StudentModel extends BaseModel
             ':birth_date' => !empty($data['birth_date']) ? $data['birth_date'] : null
         ]);
     }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM students WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([':id' => $id]);
+    }
 }
 
