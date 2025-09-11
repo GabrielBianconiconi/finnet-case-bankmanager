@@ -27,6 +27,10 @@ body {
     transition: width 0.3s ease-in-out;
 }
 
+.sidebar.extended {
+    width: 200px; /* Largura expandida */
+}
+
 .sidebar:hover {
     width: 200px; 
 }
@@ -70,8 +74,20 @@ body {
     display: none; 
 }
 
+.sidebar .nav-text {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
 .sidebar:hover .sidebar-nav a span {
     display: inline; 
+}
+
+.sidebar:hover .nav-text,
+.sidebar.extended .nav-text {
+    display: inline;
+    opacity: 1;
 }
 
 .sidebar-footer {

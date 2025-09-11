@@ -7,7 +7,7 @@ const StudentForm = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [birthdate, setBirthdate] = useState('');
+    const [birth_date, setBirth_date] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -29,7 +29,7 @@ const StudentForm = () => {
                     const result = await response.json();
                     setName(result.data.name);
                     setEmail(result.data.email);
-                    setBirthdate(result.data.birthdate);
+                    setBirth_date(result.data.birth_date  || '');
                 } catch (err) {
                     setError(err.message);
                 }
@@ -54,7 +54,11 @@ const StudentForm = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ name, email, birthdate })
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    birth_date: birth_date
+                })
             });
             
             if (!response.ok) {
@@ -108,10 +112,10 @@ const StudentForm = () => {
                         <label htmlFor="birthdate">Data de Nascimento</label>
                         <input
                             type="date"
-                            id="birthdate"
-                            name="birthdate"
-                            value={birthdate}
-                            onChange={(e) => setBirthdate(e.target.value)}
+                            id="birth_date"
+                            name="birth_date"
+                            value={birth_date}
+                            onChange={(e) => setBirth_date(e.target.value)}
                         />
                     </div>
 

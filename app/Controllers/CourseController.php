@@ -33,15 +33,25 @@ class CourseController extends BaseController
 
     public function store(): void
     {
-        $data = [
-            'title' => $_POST['title'] ?? '',
-            'description' => $_POST['description'] ?? ''
-        ];
-        
-        $this->courseModel->create($data);
-        
-        header('Location: /courses');
-        exit();
+    $birthDate = $_POST['birth_date'] ?? null;
+
+    $formattedBirthDate = null;
+    if ($birthDate) {
+        if (!empty($birthDate)) {
+            $formattedBirthDate = $birthDate;
+        }
+    }
+
+    $data = [
+        'name' => $_POST['name'] ?? '',
+        'email' => $_POST['email'] ?? '',
+        'birth_date' => $formattedBirthDate 
+    ];
+    
+    $this->studentModel->create($data);
+    
+    header('Location: /students');
+    exit();
     }
 
     public function edit(int $id): void
