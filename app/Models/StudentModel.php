@@ -8,6 +8,24 @@ class StudentModel extends BaseModel
 {
     protected string $table = 'students';
 
+    public function search(string $searchTerm): array
+    {
+        $sql = "SELECT * FROM {$this->table} 
+                WHERE name LIKE :name_term OR email LIKE :email_term 
+                ORDER BY name ASC";
+        
+        $stmt = $this->db->prepare($sql);
+        
+        $searchTermWithWildcards = '%' . $searchTerm . '%';
+
+        $stmt->execute([
+            ':name_term' => $searchTermWithWildcards,
+            ':email_term' => $searchTermWithWildcards
+        ]);
+        
+        return $stmt->fetchAll();
+    }
+
     public function create(array $data): bool
     {
         $sql = "INSERT INTO students (name, email, birth_date, created_at, updated_at) 

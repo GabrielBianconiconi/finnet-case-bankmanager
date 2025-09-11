@@ -2,6 +2,12 @@
     <h1>Gerenciamento de Alunos</h1>
     <a href="/students/create" class="btn btn-primary">Novo Aluno</a>
 
+    <form action="/students" method="GET" class="search-form">
+        <input type="text" name="search" placeholder="Pesquisar por nome ou e-mail..." value="<?= htmlspecialchars($searchTerm ?? '') ?>">
+        <button type="submit" class="btn btn-secondary">Pesquisar</button>
+        <a href="/students" class="btn btn-link">Limpar</a>
+    </form>
+
     <table class="table">
         <thead>
             <tr>
@@ -28,3 +34,4 @@
         </tbody>
     </table>
 </div>
+

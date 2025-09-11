@@ -16,11 +16,18 @@ class StudentController extends BaseController
 
     public function index(): void
     {
-        $students = $this->studentModel->findAll();
+        $searchTerm = $_GET['search'] ?? '';
+
+        if (!empty($searchTerm)) {
+            $students = $this->studentModel->search($searchTerm);
+        } else {
+            $students = $this->studentModel->findAll();
+        }
         
         $this->render('students/index', [
             'pageTitle' => 'Gerenciamento de Alunos',
-            'students' => $students
+            'students' => $students,
+            'searchTerm' => $searchTerm
         ]);
     }
     public function create(): void
@@ -48,7 +55,8 @@ class StudentController extends BaseController
         
         $this->render('students/edit', [
             'pageTitle' => 'Editar Aluno',
-            'student' => $student
+            'student' => $student,
+            'searchTerm' => $searchTerm
         ]);
     }
 
