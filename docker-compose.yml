@@ -1,0 +1,39 @@
+services:
+  # Serviço para o PHP e Servidor Web Apache
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: finnet_app
+    ports:
+      - "8000:80" # Porta 80
+    volumes:
+      - .:/var/www/html/ 
+    depends_on:
+      - db
+    networks:
+      - finnet-network
+
+
+  db:
+    image: mysql:8.0
+    container_name: finnet_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'bankmanager'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+    ports:
+      - "3307:3306" #3307
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - finnet-network
+
+networks:
+  finnet-network:
+    driver: bridge
+
+volumes:
+  db_data:

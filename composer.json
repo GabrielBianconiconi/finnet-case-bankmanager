@@ -1,0 +1,21 @@
+{
+    "name": "gabriel/finnet-case-bankmanager",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gabriel Bianconi",
+            "email": "gabrielbianconiconi@gmail.com"
+        }
+    ],
+    "require": {
+        "robmorgan/phinx": "^0.16.10"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}

@@ -1,0 +1,39 @@
+# ## Composer ##
+# Ignora a pasta de dependências
+/vendor/
+
+# O arquivo composer.lock DEVE ser versionado na maioria dos projetos PHP, então não o ignoramos.
+
+# ## Arquivos de Ambiente ##
+# Ignora arquivos de variáveis de ambiente, que contêm senhas e chaves de API
+.env
+.env.local
+.env.*.local
+
+# ## Logs e Arquivos Temporários ##
+/logs/
+*.log
+/tmp/
+
+# ## Arquivos de IDEs e Editores ##
+# PHPStorm, VSCode, Netbeans, etc.
+.idea/
+.vscode/
+nbproject/
+*.sublime-project
+*.sublime-workspace
+
+# ## Arquivos do Sistema Operacional ##
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ## Arquivos de Teste ##
+# Relatórios de cobertura de código
+/coverage/
