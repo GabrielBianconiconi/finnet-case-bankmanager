@@ -23,7 +23,7 @@ class AuthController
         $adminEmail = '1@gmail.com';
         $adminPassword = '1';
 
-        if ($email === 'admin@bankmanager.com' && $password === 'admin') {
+        if ($email === '1@gmail.com' && $password === '1') {
             $_SESSION['user_id'] = 1; 
             session_write_close();
             header('Location: /courses');

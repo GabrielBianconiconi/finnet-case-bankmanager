@@ -9,9 +9,9 @@ class CourseController extends BaseController
     public function index(): void
     {
         $courses = [
-            ['title' => 'Biologia Celular', 'description' => 'Estudo das células.'],
-            ['title' => 'Química Orgânica', 'description' => 'Estudo dos compostos de carbono.'],
-            ['title' => 'Física Quântica', 'description' => 'Introdução à mecânica quântica.'],
+            ['id' => 1, 'title' => 'Biologia Celular', 'description' => 'Estudo das células.'],
+            ['id' => 2, 'title' => 'Química Orgânica', 'description' => 'Estudo dos compostos de carbono.'],
+            ['id' => 3, 'title' => 'Física Quântica', 'description' => 'Introdução à mecânica quântica.'],
         ];
 
         $pageTitle = 'Gerenciamento de Cursos';
