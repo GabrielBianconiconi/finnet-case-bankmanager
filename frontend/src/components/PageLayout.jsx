@@ -22,7 +22,6 @@ const PageLayout = ({ pageTitle, children }) => {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
-                {/* O restante do seu JSX para a sidebar */}
                 <div className="sidebar-header">
                     <Link to="/courses" className="logo">BM</Link>
                 </div>
