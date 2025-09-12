@@ -61,5 +61,14 @@ class StudentModel extends BaseModel
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':id' => $id]);
     }
+
+    public function get_by_id(int $id): ?array
+    {
+        $sql = "SELECT * FROM students WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        $result = $stmt->fetch();
+        return $result ?: null;
+    }
 }
 

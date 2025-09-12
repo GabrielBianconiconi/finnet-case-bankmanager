@@ -37,4 +37,11 @@ class CourseModel extends BaseModel
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([':id' => $id]);
     }
+
+    public function get_all(): array
+    {
+        $sql = "SELECT * FROM courses ORDER BY title ASC";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll();
+    }
 }

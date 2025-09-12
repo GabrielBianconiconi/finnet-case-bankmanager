@@ -27,7 +27,7 @@ class AuthController
         $password = $data['password'] ?? '';
         $user = $this->userModel->findByEmail($email);
 
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && $password === $user['password']) {
 
             $secretKey =$_ENV['JWT_SECRET_KEY'];
             

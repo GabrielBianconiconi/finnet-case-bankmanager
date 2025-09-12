@@ -58,5 +58,6 @@ class EnrollmentModel extends BaseModel
 
         return $stmt->execute([':id' => $id]);
     }
+
 }
 
