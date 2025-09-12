@@ -6,6 +6,7 @@ use App\Models\UserModel;
 use \Firebase\JWT\JWT;
 use Dotenv\Dotenv;
 
+// Carrega as variáveis de ambiente
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../..');
 $dotenv->load();
 
@@ -21,20 +22,18 @@ class AuthController
     public function login(): void
     {
         header('Content-Type: application/json');
-
         $data = json_decode(file_get_contents('php://input'), true);
-
         $email = $data['email'] ?? '';
         $password = $data['password'] ?? '';
         $user = $this->userModel->findByEmail($email);
 
         if ($user && password_verify($password, $user['password'])) {
 
-            $secretKey = $_ENV['JWT_SECRET_KEY'] ?? 'sua_chave_secreta_padrao';
+            $secretKey =$_ENV['JWT_SECRET_KEY'];
             
             $payload = [
                 'iat'  => time(), 
-                'exp'  => time() + (60 * 60), // Expira em 1 hora
+                'exp'  => time() + (60 * 60), 
                 'data' => [
                     'userId' => $user['id'],
                     'email'  => $user['email']
@@ -52,6 +51,7 @@ class AuthController
             exit();
 
         } else {
+
             http_response_code(401); // Unauthorized
             echo json_encode(['error' => 'E-mail ou senha inválidos.']);
             exit();

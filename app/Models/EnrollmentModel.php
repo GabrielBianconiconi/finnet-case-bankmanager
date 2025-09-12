@@ -49,5 +49,14 @@ class EnrollmentModel extends BaseModel
             ':course_id' => $data['course_id']
         ]);
     }
+
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM enrollments WHERE id = :id";
+        
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([':id' => $id]);
+    }
 }
 
