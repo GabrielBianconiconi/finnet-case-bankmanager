@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import ConfirmPopup from '../components/ConfirmPopup';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt, faSearch } from '@fortawesome/free-solid-svg-icons';
 import PageLayout from '../components/PageLayout';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +11,8 @@ const StudentsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [studentToDeleteId, setStudentToDeleteId] = useState(null);
 
     useEffect(() => {
         const fetchStudents = async () => {
@@ -34,63 +40,70 @@ const StudentsPage = () => {
         fetchStudents();
     }, [searchTerm]); 
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
+    const handleOpenPopup = (courseId) => {
+        setStudentToDeleteId(courseId);
+        setPopupVisible(true);
     };
 
-    const handleClearSearch = () => {
-        setSearchTerm('');
+    const handleCancelDelete = () => {
+        setPopupVisible(false);
+        setStudentToDeleteId(null);
     };
 
-    const handleDelete = async (studentId) => {
-        if (!window.confirm('Tem certeza que deseja excluir este aluno?')) {
-            return;
-        }
 
+    const handleConfirmDelete = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8000/api/students/${studentId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+            await axios.delete(`http://localhost:8000/api/students/${studentToDeleteId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            if (!response.ok) {
-                throw new Error('Falha ao excluir o aluno.');
+            if (response.status === 200) {
+                setStudents(students.filter(student => student.id !== studentToDeleteId));
+                handleCancelDelete();
+            } else {
+                throw new Error('Falha na exclusão do aluno.');
             }
 
-            // Remove o aluno da lista na tela após a exclusão bem-sucedida
-            setStudents(students.filter(student => student.id !== studentId));
-        } catch (err) {
-            setError(err.message);
+        } catch (error) {
+            console.error('Erro ao excluir aluno:', error);
+            setError('Erro ao excluir o aluno. Tente novamente.');
+            handleCancelDelete();
         }
     };
 
+    
 
     if (loading) return <PageLayout pageTitle="Gerenciamento de Alunos"><div>Carregando...</div></PageLayout>;
     if (error) return <PageLayout pageTitle="Gerenciamento de Alunos"><div>Erro: {error}</div></PageLayout>;
 
     return (
-        <PageLayout pageTitle="Gerenciamento de Alunos">
+        <PageLayout pageTitle="Bank Manager">
             <div className="container">
                 <h1>Gerenciamento de Alunos</h1>
+                <div className= "toolbar">
                 <Link to="/students/create" className="btn btn-primary">Novo Aluno</Link>
-                <div className="search-form">
-                    <input 
-                        type="text" 
-                        placeholder="Pesquisar por nome ou e-mail..."
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                    />
-                    <button onClick={handleClearSearch} className="btn btn-link">Limpar</button>
+                <div className="search-box">
+                        <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                        <input 
+                            type="text" 
+                            placeholder="Pesquisar..."
+                            className="search-input"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
                 </div>
+            </div>
+
+                {error && <div className="error-message">{error}</div>}
+                
                 <table className="table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nome</th>
                             <th>Email</th>
+                            <th>Data de nascimento</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -100,13 +113,14 @@ const StudentsPage = () => {
                                 <td>{student.id}</td>
                                 <td>{student.name}</td>
                                 <td>{student.email}</td>
+                                <td>{student.birth_date}</td>
                                 <td className="actions">
-                                    <Link to={`/students/edit/${student.id}`} className="btn btn-secondary">Editar</Link>
+                                    <a href={`/students/edit/${student.id}`} className="btn btn-secondary">Editar</a>
                                     <button 
-                                        onClick={() => handleDelete(student.id)} 
+                                        onClick={() => handleOpenPopup(student.id)} 
                                         className="btn btn-danger"
                                     >
-                                        Excluir
+                                        <FontAwesomeIcon icon={faTrashAlt} /> Excluir
                                     </button>
                                 </td>
                             </tr>
@@ -114,6 +128,14 @@ const StudentsPage = () => {
                     </tbody>
                 </table>
             </div>
+
+            {popupVisible && (
+                <ConfirmPopup 
+                    message="Tem certeza que deseja excluir este aluno?" 
+                    onConfirm={handleConfirmDelete} 
+                    onCancel={handleCancelDelete} 
+                />
+            )}
         </PageLayout>
     );
 };

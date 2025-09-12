@@ -71,7 +71,7 @@ const CoursesPage = () => {
     if (error) return <PageLayout pageTitle="Gerenciamento de Cursos"><div>Erro: {error}</div></PageLayout>;
 
     return (
-        <PageLayout pageTitle="Gerenciamento de Cursos">
+        <PageLayout pageTitle="Bank Manager">
             <div className="container">
                 <h1>Gerenciamento de Cursos</h1>
                 <a href="/courses/create" className="btn btn-primary">Novo Curso</a>
