@@ -58,16 +58,14 @@ const StudentsPage = () => {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            if (response.status === 200) {
-                setStudents(students.filter(student => student.id !== studentToDeleteId));
-                handleCancelDelete();
-            } else {
-                throw new Error('Falha na exclusão do aluno.');
-            }
-
+            // Atualiza a lista removendo o student excluído
+            setStudents(students.filter(student => student.id !== studentToDeleteId));
+            
+            // Fecha o pop-up e limpa o ID
+            handleCancelDelete();
         } catch (error) {
-            console.error('Erro ao excluir aluno:', error);
-            setError('Erro ao excluir o aluno. Tente novamente.');
+            console.error('Erro ao excluir o aluno:', error);
+            alert('Erro ao excluir o aluno. Tente novamente.');
             handleCancelDelete();
         }
     };
@@ -94,8 +92,6 @@ const StudentsPage = () => {
                         />
                 </div>
             </div>
-
-                {error && <div className="error-message">{error}</div>}
                 
                 <table className="table">
                     <thead>
