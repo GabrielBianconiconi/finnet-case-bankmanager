@@ -62,6 +62,8 @@ O Docker irá gerenciar a aplicação PHP e o banco de dados MySQL automaticamen
 
   - Construa e inicie os contêineres do Docker:
     `docker-compose up --build -d`
+  - Instalar o composer:
+    `docker-compose run --rm app composer install`
 
 ### 2\. Configurar o Banco de Dados
 
@@ -103,7 +105,7 @@ Para acessar o painel, use as seguintes credenciais:
 ## ✅ Testes e Qualidade
 
   - **Testes Unitários**: O projeto conta com testes unitários para os principais modelos (Course, Enrollment). Para rodar os testes, execute:
-    `docker-compose exec app vendor/bin/phpunit`
+    `docker-compose exec app vendor/bin/phpunit tests`
 
   - **Migrations**: Todas as alterações no esquema do banco de dados são geridas por migrations, garantindo um ambiente de desenvolvimento consistente.
 
