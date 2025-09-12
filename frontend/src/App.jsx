@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import StudentsPage from './pages/StudentsPage';
 import CoursesPage from './pages/CoursesPage';
@@ -13,6 +13,16 @@ import './styles/Forms.css';
 const PrivateRoute = ({ children }) => {
     const isAuthenticated = !!localStorage.getItem('token');
     return isAuthenticated ? children : <Navigate to="/login" />;
+};
+
+const Logout = () => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        localStorage.removeItem('token'); // Limpa o token
+        navigate('/login'); // Redireciona para o login
+    }, [navigate]);
+
+    return null; 
 };
 
 const App = () => {
@@ -36,6 +46,8 @@ const App = () => {
                 <Route path="/enrollments" element={<PrivateRoute><EnrollmentPage /></PrivateRoute>} />
                 <Route path="/enrollments/create" element={<PrivateRoute><EnrollmentForm /></PrivateRoute>} />
                 <Route path="/enrollments/edit/:id" element={<PrivateRoute><EnrollmentForm /></PrivateRoute>} />
+
+                <Route path="*" element={<Navigate to="/login" />} />
                 
             </Routes>
         </BrowserRouter>

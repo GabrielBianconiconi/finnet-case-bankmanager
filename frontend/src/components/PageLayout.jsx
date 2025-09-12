@@ -9,7 +9,7 @@ const PageLayout = ({ pageTitle, children }) => {
     const navigate = useNavigate(); 
     const [isHovered, setIsHovered] = useState(false);
     const isActive = (path) => location.pathname.startsWith(path);
-    const sidebarClass = `sidebar ${isHovered ? 'hovered' : ''}`;
+    const sidebarClass = `sidebar ${isHovered ? 'extended' : ''}`;
     const handleLogout = () => {
         localStorage.removeItem('token');
         navigate('/login');
