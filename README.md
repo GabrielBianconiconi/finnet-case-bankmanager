@@ -68,8 +68,8 @@ O Docker irá gerenciar a aplicação PHP e o banco de dados MySQL automaticamen
   - Execute as migrations para criar as tabelas no banco de dados:
     `docker-compose exec app php vendor/bin/phinx migrate`
 
-  - (Opcional, mas recomendado) Execute a seeder para popular o banco de dados com dados de teste para Alunos e Cursos:
-    `docker-compose exec app php vendor/bin/phinx seed:run --seed=InitialDataSeeder`
+  - Execute o comando para registrar o Prof. Jubilut no sistema
+    `docker-compose exec db mysql -uuser -ppassword bankmanager -e "INSERT INTO users(name, email, password) VALUES ('Prof. Jubilut', 'jubilut@gmail.com', 'jubilut123');"`
 
 ### 3\. Configurar o Frontend
 
@@ -82,7 +82,14 @@ O Docker irá gerenciar a aplicação PHP e o banco de dados MySQL automaticamen
   - Inicie o servidor de desenvolvimento do frontend:
     `npm run dev`
 
-### 4\. Acessar a Aplicação
+### 4\. Configurar as Variáveis de Ambiente
+
+  - Para a aplicação funcionar, é necessário criar um arquivo de variáveis de ambiente.
+  - Na raiz do seu projeto, crie um arquivo chamado .env.
+  - Copie e cole o seguinte conteúdo no arquivo:
+    `JWT_SECRET_KEY=jubilut123`
+
+### 5\. Acessar a Aplicação
 
 Sua aplicação estará disponível em `http://localhost:5173`.
 
